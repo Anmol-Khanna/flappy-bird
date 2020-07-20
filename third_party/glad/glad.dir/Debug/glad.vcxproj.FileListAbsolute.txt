@@ -1,0 +1,2 @@
+C:\Users\anony\Desktop\fractals-gendestry\third_party\glad\Debug\glad.pdb
+C:\Users\anony\Desktop\fractals-gendestry\third_party\glad\glad.dir\Debug\glad.pdb

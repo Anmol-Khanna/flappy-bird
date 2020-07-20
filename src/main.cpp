@@ -6,7 +6,7 @@
 #include "window.h"
 #include "shader.h"
 #include "mesh.h"
-#include "model.h"
+//#include "model.h"
 
 int main() {
   auto window{Window{800, 800, "Flappy Bird", 4, 1}};

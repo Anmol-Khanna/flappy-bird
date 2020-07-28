@@ -31,6 +31,7 @@ void Window::makeContextCurrent() {
     initialised_ = gladLoadGL();
   }
 }
+GLFWwindow* Window::getWindow() { return window_; }
 bool Window::isInitialised() { return initialised_; }
 bool Window::shouldClose() { return glfwWindowShouldClose(window_); }
 void Window::loop(std::function<void(void)> func) {

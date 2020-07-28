@@ -12,6 +12,7 @@ class Window {
          const int contextVersionMajor, const int contextVersionMinor);
   bool isCreated();
   void makeContextCurrent();
+  GLFWwindow* getWindow();
   bool isInitialised();
   bool shouldClose();
   void loop(std::function<void(void)> func);

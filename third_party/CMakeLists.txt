@@ -1,18 +1,13 @@
 add_subdirectory(glad)
 add_subdirectory(glfw)
 add_subdirectory(glm)
+add_subdirectory(tinyobjloader)
 
-set(BUILD_SHARED_LIBS OFF)
-set(ASSIMP_INSTALL OFF)
-set(ASSIMP_BUILD_ASSIMP_TOOLS OFF)
-add_subdirectory(assimp)
-set(BUILD_SHARED_LIBS ON)
-set(STB_IMAGE ${EXTERNAL}/stb)
 add_library(stb INTERFACE)
 target_include_directories(
     stb
     INTERFACE
-    ${STB_IMAGE}
+    stb
 )
 
 if (USE_IMGUI)

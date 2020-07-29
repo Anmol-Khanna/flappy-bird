@@ -7,6 +7,7 @@ add_library(
     mesh.cpp
     shader.cpp
     player.cpp
+    texture.cpp
 )
 target_include_directories(
     engine
@@ -19,7 +20,6 @@ target_link_libraries(
     glad
     glfw
     glm
-    stb
 )
 
 target_compile_features(engine PUBLIC cxx_std_17)

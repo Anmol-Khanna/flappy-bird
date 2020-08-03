@@ -33,12 +33,8 @@ int main() {
   fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
   try {
     // open files
-    vShaderFile.open(
-        "/Users/Darius/Documents/study/summer-of-shipping/flappy-bird/src/"
-        "helicopter.vs");
-    fShaderFile.open(
-        "/Users/Darius/Documents/study/summer-of-shipping/flappy-bird/src/"
-        "helicopter.fs");
+    vShaderFile.open("src/helicopter.vs");
+    fShaderFile.open("src/helicopter.fs");
     std::stringstream vShaderStream, fShaderStream;
     // read file's buffer contents into streams
     vShaderStream << vShaderFile.rdbuf();

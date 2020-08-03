@@ -56,8 +56,8 @@ bool LoadObjAndConvert(
     std::function<void(int, int, int, unsigned char*, std::string)> onTexture) {
   tinyobj::attrib_t attrib{};
   std::vector<tinyobj::shape_t> shapes{};
-    std::vector<tinyobj::material_t> materials{};
-    std::set<std::string> textures{};
+  std::vector<tinyobj::material_t> materials{};
+  std::set<std::string> textures{};
   std::string base_dir = GetBaseDir(filename);
   if (base_dir.empty()) {
     base_dir = ".";
@@ -107,8 +107,8 @@ bool LoadObjAndConvert(
         }
         unsigned char* image = stbi_load(texture_filename.c_str(), &w, &h,
                                          &channels, STBI_default);
-        if(stbi_failure_reason())
-            std::cout << stbi_failure_reason() <<std::endl;
+        if (stbi_failure_reason())
+          std::cout << stbi_failure_reason() << std::endl;
         if (!image) {
           std::cerr << "Unable to load texture: " << texture_filename
                     << std::endl;
@@ -125,7 +125,7 @@ bool LoadObjAndConvert(
   bmax[0] = bmax[1] = bmax[2] = -std::numeric_limits<float>::max();
 
   for (size_t s = 0; s < shapes.size(); s++) {
-    auto mesh {std::make_shared<Mesh>()};
+    auto mesh{std::make_shared<Mesh>()};
     std::vector<float> positions{}, normals{}, colours{}, texture_coordinates{};
 
     std::unordered_map<int, vec3> smoothVertexNormals{};
@@ -299,19 +299,20 @@ bool LoadObjAndConvert(
         shapes[s].mesh.material_ids.size() > s) {
       material_id = shapes[s].mesh.material_ids[0];
     } else {
-      material_id = materials.size() - 1; 
+      material_id = materials.size() - 1;
     }
     if (positions.size() > 0) {
-        onPositions(positions);
+      onPositions(positions);
     }
     if (normals.size() > 0) {
-        onNormals(normals);
+      onNormals(normals);
     }
     if (colours.size() > 0) {
       onColours(colours);
     }
-    if (texture_coordinates.size() > 0){
-        onTextureCoordinates(texture_coordinates, materials[material_id].diffuse_texname);
+    if (texture_coordinates.size() > 0) {
+      onTextureCoordinates(texture_coordinates,
+                           materials[material_id].diffuse_texname);
     }
   }
   return true;

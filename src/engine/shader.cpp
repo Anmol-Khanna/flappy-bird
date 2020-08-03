@@ -24,7 +24,7 @@ GLint Shader::getLocation(const std::string name) {
 void Shader::loadUniform(const std::string name, glm::mat4 mat) {
   glUniformMatrix4fv(getLocation(name), 1, GL_FALSE, glm::value_ptr(mat));
 }
-void Shader::loadUniform(const std::string name, int val){
+void Shader::loadUniform(const std::string name, int val) {
   glUniform1i(getLocation(name), val);
 }
 Shader::~Shader() {
@@ -76,7 +76,7 @@ bool Shader::createProgram() {
   return success_ = true;
 }
 
-bool Shader::validate(){
+bool Shader::validate() {
   char infoLog[1024];
   GLint success;
   glValidateProgram(program_);

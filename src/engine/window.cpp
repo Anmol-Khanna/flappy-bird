@@ -1,4 +1,9 @@
 #include "window.h"
+#ifdef USE_IMGUI
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+#endif
 
 Window::Window(const int width, const int height, const std::string title,
                const int contextVersionMajor, const int contextVersionMinor)
@@ -29,6 +34,12 @@ void Window::makeContextCurrent() {
   if (created_) {
     glfwMakeContextCurrent(window_);
     initialised_ = gladLoadGL();
+#ifdef USE_IMGUI
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGui_ImplGlfw_InitForOpenGL(window_, true);
+    ImGui_ImplOpenGL3_Init("#version 410");
+#endif
   }
 }
 bool Window::isInitialised() { return initialised_; }
@@ -36,6 +47,15 @@ bool Window::shouldClose() { return glfwWindowShouldClose(window_); }
 void Window::loop(std::function<void(void)> func) {
   while (!shouldClose()) {
     glClear(GL_COLOR_BUFFER_BIT);
+#ifdef USE_IMGUI
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+    ImGui::Begin("Debug");
+    ImGui::End();
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+#endif
     func();
     glfwSwapBuffers(window_);
     glfwPollEvents();

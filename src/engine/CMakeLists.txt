@@ -21,5 +21,17 @@ target_link_libraries(
     glfw
     glm
 )
+if (USE_IMGUI)
+    target_compile_definitions(
+        engine
+        PRIVATE
+        USE_IMGUI=1
+    )
+    target_link_libraries(
+        engine
+        PRIVATE
+        imgui
+    )
+endif()
 
 target_compile_features(engine PUBLIC cxx_std_17)

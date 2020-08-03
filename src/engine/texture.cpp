@@ -1,6 +1,6 @@
 #include "texture.h"
 
-Texture::Texture() {};
+Texture::Texture(){};
 
 void Texture::attachTexture(unsigned int width, unsigned int height,
                             unsigned int channels, unsigned char* data) {
@@ -17,7 +17,7 @@ void Texture::attachTexture(unsigned int width, unsigned int height,
   }
 }
 
-void Texture::activate(unsigned int slot=0) {
-  glActiveTexture(GL_TEXTURE0+slot);
+void Texture::activate(unsigned int slot = 0) {
+  glActiveTexture(GL_TEXTURE0 + slot);
   glBindTexture(GL_TEXTURE_2D, texture_);
 }

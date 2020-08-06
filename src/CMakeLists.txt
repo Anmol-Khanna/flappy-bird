@@ -15,27 +15,9 @@ elseif (WIN32)
     )
 endif()
 
-add_library(tinyobjloader_wrapper tinyobjloader_wrapper.cpp)
-target_include_directories(
-    tinyobjloader_wrapper
-    PUBLIC
-    "${CMAKE_CURRENT_LIST_DIR}"
-)
-target_link_libraries(
-    tinyobjloader_wrapper
-    PRIVATE
-    stb
-)
-target_link_libraries(
-    tinyobjloader_wrapper
-    PUBLIC
-    engine
-    tinyobjloader
-)
 add_executable(main main.cpp)
 target_link_libraries(
     main
     PRIVATE
     engine
-    tinyobjloader_wrapper
 )

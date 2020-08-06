@@ -1,12 +1,17 @@
-#ifndef TINYOBJLOADER_WRAPPER
-#define TINYOBJLOADER_WRAPPER
+#ifndef RESOURCE_MANAGER_H
+#define RESOURCE_MANAGER_H
 
+#include <iostream>
+#include <fstream>
+#include <sstream>
 #include <string>
 #include <unordered_map>
 #include <vector>
 #include <tiny_obj_loader.h>
 #include "mesh.h"
 #include "texture.h"
+
+std::string getShaderCode(const std::string name);
 struct vec3 {
   float v[3];
   vec3() {
@@ -26,5 +31,4 @@ bool LoadObjAndConvert(
     std::function<void(std::vector<float>)> onColours,
     std::function<void(std::vector<float>, std::string)> onTextureCoordinates,
     std::function<void(int, int, int, unsigned char*, std::string)> onTexture);
-
 #endif

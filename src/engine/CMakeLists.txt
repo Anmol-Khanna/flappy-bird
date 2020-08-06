@@ -8,6 +8,9 @@ add_library(
     shader.cpp
     player.cpp
     texture.cpp
+    camera.cpp
+    utils.cpp
+    renderable.cpp
 )
 target_include_directories(
     engine
@@ -20,6 +23,16 @@ target_link_libraries(
     glad
     glfw
     glm
+)
+target_link_libraries(
+    engine
+    PUBLIC
+    tinyobjloader
+)
+target_link_libraries(
+    engine
+    PRIVATE
+    stb
 )
 if (USE_IMGUI)
     target_compile_definitions(

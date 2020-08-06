@@ -1,7 +1,21 @@
+#include "utils.h"
 #include <set>
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
-#include "tinyobjloader_wrapper.h"
+
+std::string getShaderCode(const std::string name) {
+  std::ifstream file;
+  file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+  try {
+    file.open(name);
+    std::stringstream stream;
+    stream << file.rdbuf();
+    return stream.str();
+  } catch (std::ifstream::failure& e) {
+    std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
+  }
+  return "";
+}
 
 bool FileExists(const std::string& abs_filename) {
   bool ret;

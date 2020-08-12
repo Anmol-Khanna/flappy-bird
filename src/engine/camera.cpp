@@ -1,9 +1,11 @@
 #include "camera.h"
 
-Camera::Camera(const glm::vec3 position, const glm::vec3 up, const float yaw,
-               const float pitch)
-    : currentXPos_{0.0f},
-      currentYPos_{0.0f},
+Camera::Camera(const glm::mat4 projection, const float currentXPos,
+               const float currentYPos, const glm::vec3 position,
+               const glm::vec3 up, const float yaw, const float pitch)
+    : projection_{projection},
+      currentXPos_{currentXPos},
+      currentYPos_{currentYPos},
       position_{position},
       front_(glm::vec3(0.0f, 0.0f, -1.0f)),
       up_{up},
@@ -20,13 +22,21 @@ glm::mat4 Camera::getViewMatrix() {
   return glm::lookAt(position_, position_ + front_, up_);
 }
 
+glm::mat4 Camera::getTransform() {
+  return projection_ * glm::lookAt(position_, position_ + front_, up_);
+}
+
 void Camera::processKeyboard(const CameraMovement direction,
                              const float deltaTime) {
   float velocity = movementSpeed_ * deltaTime;
-  if (direction == CameraMovement::FORWARD) position_ += front_ * velocity;
-  if (direction == CameraMovement::BACKWARD) position_ -= front_ * velocity;
-  if (direction == CameraMovement::LEFT) position_ -= right_ * velocity;
-  if (direction == CameraMovement::RIGHT) position_ += right_ * velocity;
+  if (direction == CameraMovement::FORWARD)
+    position_ += front_ * velocity;
+  else if (direction == CameraMovement::BACKWARD)
+    position_ -= front_ * velocity;
+  else if (direction == CameraMovement::LEFT)
+    position_ -= right_ * velocity;
+  else if (direction == CameraMovement::RIGHT)
+    position_ += right_ * velocity;
 }
 
 void Camera::processMouseMovement(float xpos, float ypos, bool constrainPitch) {

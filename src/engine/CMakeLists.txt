@@ -6,7 +6,7 @@ add_library(
     movable.cpp
     mesh.cpp
     shader.cpp
-    player.cpp
+    object.cpp
     texture.cpp
     camera.cpp
     utils.cpp

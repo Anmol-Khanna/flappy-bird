@@ -3,18 +3,25 @@
 
 #include <vector>
 #include <memory>
+#include <tuple>
 #include "mesh.h"
 #include "texture.h"
 #include "shader.h"
 class Renderable {
  public:
-  void render(std::unordered_map<std::string, std::shared_ptr<Texture>>,
-              glm::mat4 model, glm::mat4 view, glm::mat4 projection);
+  void render(std::unordered_map<std::string, std::shared_ptr<Texture>>);
   void test();
-  void attach(std::vector<float> positions, std::vector<float> normals,
-              std::vector<float> colours,
-              std::vector<float> texture_coordinates, std::string texture_name);
+  void attach(std::tuple<std::vector<float>, int, int> positions_location_size,
+              std::tuple<std::vector<float>, int, int> normals_location_size,
+              std::tuple<std::vector<float>, int, int> colours_location_size,
+              std::tuple<std::vector<float>, int, int>
+                  texture_coordinates_location_size,
+              std::string texture_name);
   void attach(std::shared_ptr<Shader> shader);
+  template <typename T>
+  void set(const std::string name, T val) {
+    shader_->loadUniform(name, val);
+  }
 
  private:
   std::shared_ptr<Shader> shader_;

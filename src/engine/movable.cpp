@@ -17,3 +17,6 @@ void Movable::setTranslation(glm::mat4 newTranslation) {
 const glm::mat4& Movable::getTranslation() { return translation_; }
 void Movable::setRotation(glm::mat4 newRotation) { rotation_ = newRotation; }
 const glm::mat4& Movable::getRotation() { return rotation_; }
+const glm::mat4 Movable::getTransform() {
+  return translation_ * rotation_ * scale_;
+}

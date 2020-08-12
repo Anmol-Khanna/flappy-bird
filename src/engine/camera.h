@@ -6,7 +6,7 @@
 
 enum class CameraMovement { FORWARD, BACKWARD, LEFT, RIGHT };
 
-constexpr float YAW = 0.0f;
+constexpr float YAW = -90.0f;
 constexpr float PITCH = 0.0f;
 constexpr float SPEED = 2.5f;
 constexpr float SENSITIVITY = 0.1f;
@@ -14,10 +14,13 @@ constexpr float ZOOM = 45.0f;
 
 class Camera {
  public:
-  Camera(const glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f),
+  Camera(const glm::mat4 projection, const float currentXPos,
+         const float currentYPos,
+         const glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f),
          const glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f),
          const float yaw = YAW, const float pitch = PITCH);
   glm::mat4 getViewMatrix();
+  glm::mat4 getTransform();
   void processKeyboard(const CameraMovement direction, const float deltaTime);
 
   void processMouseMovement(float xpos, float ypos, bool constrainPitch = true);
@@ -31,6 +34,7 @@ class Camera {
   glm::vec3 up_;
   glm::vec3 right_;
   glm::vec3 worldUp_;
+  glm::mat4 projection_;
   float yaw_;
   float pitch_;
   float movementSpeed_;

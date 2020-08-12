@@ -12,12 +12,15 @@
 #include "texture.h"
 #include "camera.h"
 #include "utils.h"
-#include "player.h"
+#include "object.h"
 
 int main() {
   constexpr int SCR_WIDTH = 800, SCR_HEIGHT = 800;
-  Camera camera{};
-  Player player{};
+  Camera camera{
+      glm::perspective(glm::radians(45.0f),
+                       (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f),
+      (float)SCR_WIDTH / 2.0f, (float)SCR_HEIGHT / 2.0f};
+  Object player{};
   auto window{Window{SCR_WIDTH, SCR_HEIGHT, "Flappy Bird", 4, 1}};
   if (!window.isCreated()) {
     return -1;
@@ -32,8 +35,8 @@ int main() {
       [&](const CameraMovement direction, const float deltaTime) {
         camera.processKeyboard(direction, deltaTime);
       });
-  std::string vertexCode = getShaderCode("src/helicopter.vs");
-  std::string fragmentCode = getShaderCode("src/helicopter.fs");
+  std::string vertexCode = getShaderCode("src/player/helicopter.vs");
+  std::string fragmentCode = getShaderCode("src/player/helicopter.fs");
   float bmin[3], bmax[3];
   std::unordered_map<std::string, std::shared_ptr<Texture>> textures{};
   std::vector<std::vector<float>> positions{}, normals{}, colours{},
@@ -55,12 +58,6 @@ int main() {
         textures.insert({name, texture});
       });
 
-  for (int i = 0; i < positions.size(); ++i) {
-    player.Renderable::attach(positions[i], normals[i], colours[i],
-                              texture_coordinates[i], texture_names[i]);
-  }
-  Shader shader{vertexCode, fragmentCode};
-  player.Renderable::attach(std::make_shared<Shader>(shader));
   float maxExtent = 0.5f * (bmax[0] - bmin[0]);
   if (maxExtent < 0.5f * (bmax[1] - bmin[1])) {
     maxExtent = 0.5f * (bmax[1] - bmin[1]);
@@ -68,17 +65,20 @@ int main() {
   if (maxExtent < 0.5f * (bmax[2] - bmin[2])) {
     maxExtent = 0.5f * (bmax[2] - bmin[2]);
   }
+  for (int i = 0; i < positions.size(); ++i) {
+    player.attach({positions[i], 0, 3}, {normals[i], 1, 3}, {colours[i], 2, 3},
+                  {texture_coordinates[i], 3, 2}, texture_names[i]);
+  }
+  Shader shader{vertexCode, fragmentCode};
+  player.attach(std::make_shared<Shader>(shader));
+  player.Movable::setScale(glm::scale(
+      glm::mat4(1.0f),
+      glm::vec3(1.0f / maxExtent, 1.0f / maxExtent, 1.0f / maxExtent)));
   float angle = 0.0f;
   window.loop([&]() {
-    glm::mat4 model = glm::mat4(1.0f);
-    glm::mat4 view = camera.getViewMatrix();
-    glm::mat4 projection = glm::mat4(1.0f);
-    model = glm::scale(
-        model, glm::vec3(1.0f / maxExtent, 1.0f / maxExtent, 1.0f / maxExtent));
-    view = glm::rotate(view, glm::radians(angle), glm::vec3(0, 1, 0));
-    // projection = glm::perspective(glm::radians(0.0f), (float)SCR_WIDTH /
-    // (float)SCR_HEIGHT, 0.1f, 100.0f);
     angle += 1.0f;
-    player.render(textures, model, view, projection);
+    player.Movable::setRotation(
+        glm::rotate(glm::mat4(1.0f), glm::radians(angle), glm::vec3(0, 1, 0)));
+    player.render(textures, camera.getTransform());
   });
 }

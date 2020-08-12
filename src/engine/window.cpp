@@ -39,7 +39,7 @@ void Window::makeContextCurrent() {
     initialised_ = gladLoadGL();
     glfwSetWindowUserPointer(window_, this);
     glEnable(GL_CULL_FACE);
-    glCullFace(GL_FRONT);
+    // glCullFace(GL_FRONT);
     glEnable(GL_DEPTH_TEST);
 #ifdef USE_IMGUI
     IMGUI_CHECKVERSION();

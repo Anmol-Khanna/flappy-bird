@@ -8,6 +8,8 @@
 #include <unordered_map>
 #include <vector>
 #include <tiny_obj_loader.h>
+#include <functional>
+#include <algorithm>
 #include "mesh.h"
 #include "texture.h"
 

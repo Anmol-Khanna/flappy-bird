@@ -4,6 +4,7 @@
 #include <string>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <functional>
 #include "camera.h"
 class Window {
  public:

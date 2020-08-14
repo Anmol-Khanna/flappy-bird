@@ -35,15 +35,15 @@ int main() {
       [&](const CameraMovement direction, const float deltaTime) {
         camera.processKeyboard(direction, deltaTime);
       });
-  std::string vertexCode = getShaderCode("src/player/helicopter.vs");
-  std::string fragmentCode = getShaderCode("src/player/helicopter.fs");
+  std::string vertexCode = getShaderCode("C:/Users/anony/Desktop/flappy-bird/src/player/helicopter.vs"); //@TODO: make path relative
+  std::string fragmentCode = getShaderCode("C:/Users/anony/Desktop/flappy-bird/src/player/helicopter.fs"); //@TODO: make path relative
   float bmin[3], bmax[3];
   std::unordered_map<std::string, std::shared_ptr<Texture>> textures{};
   std::vector<std::vector<float>> positions{}, normals{}, colours{},
       texture_coordinates{};
   std::vector<std::string> texture_names{};
   LoadObjAndConvert(
-      bmin, bmax, "assets/AW101/AW101.obj",
+      bmin, bmax, "C:/Users/anony/Desktop/flappy-bird/assets/AW101/AW101.obj", //@TODO: make path relative
       [&](std::vector<float> position) { positions.push_back(position); },
       [&](std::vector<float> normal) { normals.push_back(normal); },
       [&](std::vector<float> colour) { colours.push_back(colour); },
@@ -77,8 +77,8 @@ int main() {
   float angle = 0.0f;
   window.loop([&]() {
     angle += 1.0f;
-    player.Movable::setRotation(
-        glm::rotate(glm::mat4(1.0f), glm::radians(angle), glm::vec3(0, 1, 0)));
+    //player.Movable::setRotation(
+        //glm::rotate(glm::mat4(1.0f), glm::radians(angle), glm::vec3(0, 1, 0)));
     player.render(textures, camera.getTransform());
   });
 }

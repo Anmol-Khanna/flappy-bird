@@ -75,10 +75,19 @@ int main() {
       glm::mat4(1.0f),
       glm::vec3(1.0f / maxExtent, 1.0f / maxExtent, 1.0f / maxExtent)));
   float angle = 0.0f;
+  float x_position = 0.0f;
+  glm::vec3 currentPosition = player.Movable::getPosition();
+  glm::vec3 newPosition = currentPosition;
   window.loop([&]() {
     angle += 1.0f;
+    newPosition[0] += 0.005f;
     //player.Movable::setRotation(
         //glm::rotate(glm::mat4(1.0f), glm::radians(angle), glm::vec3(0, 1, 0)));
+    // rotate the model 90 degrees around the y (vertical) axis
+    player.Movable::setRotation(glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(0,1,0)));
+    // move the model in the +ve x direction 
+    player.Movable::setTranslation(glm::translate(glm::mat4(1.0f), newPosition));
+    //player.Movable::setTranslation(glm::translate(glm::mat4(1.0f), glm::vec3(1.0f, 0.0f, 0.0f)));
     player.render(textures, camera.getTransform());
   });
 }

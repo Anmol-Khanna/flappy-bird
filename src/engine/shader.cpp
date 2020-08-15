@@ -14,6 +14,7 @@ Shader::Shader(const std::string vertexShader, const std::string fragmentShader)
 }
 bool Shader::isInitialised() { return success_; }
 void Shader::activate() { glUseProgram(program_); }
+void Shader::deactivate() { glUseProgram(0); }
 GLint Shader::getLocation(const std::string name) {
   if (locations_.find(name) == locations_.end()) {
     auto location = glGetUniformLocation(program_, name.c_str());

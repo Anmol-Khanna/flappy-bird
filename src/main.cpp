@@ -6,6 +6,7 @@
 #include <vector>
 #include <unordered_map>
 #include <glad/glad.h>
+#include <cmath>
 #include "window.h"
 #include "shader.h"
 #include "mesh.h"
@@ -13,6 +14,7 @@
 #include "camera.h"
 #include "utils.h"
 #include "object.h"
+#include "fractal.h"
 
 int main() {
   constexpr int SCR_WIDTH = 800, SCR_HEIGHT = 800;
@@ -35,6 +37,8 @@ int main() {
       [&](const CameraMovement direction, const float deltaTime) {
         camera.processKeyboard(direction, deltaTime);
       });
+
+  // PLAYER
   std::string vertexCode = getShaderCode("src/player/helicopter.vs");
   std::string fragmentCode = getShaderCode("src/player/helicopter.fs");
   float bmin[3], bmax[3];
@@ -74,11 +78,19 @@ int main() {
   player.Movable::setScale(glm::scale(
       glm::mat4(1.0f),
       glm::vec3(1.0f / maxExtent, 1.0f / maxExtent, 1.0f / maxExtent)));
+
+  // FRACTAL
+  Fractal fractal{SCR_WIDTH, SCR_HEIGHT};
   float angle = 0.0f;
   window.loop([&]() {
-    angle += 1.0f;
+    angle += 0.1f;
     player.Movable::setRotation(
         glm::rotate(glm::mat4(1.0f), glm::radians(angle), glm::vec3(0, 1, 0)));
+    player.Movable::setScale(glm::scale(
+        glm::mat4(1.0f),
+        glm::vec3(glm::sin(angle) / maxExtent, glm::sin(angle) / maxExtent,
+                  glm::sin(angle) / maxExtent)));
     player.render(textures, camera.getTransform());
+    fractal.render(camera.getTransform());
   });
 }

@@ -9,13 +9,13 @@
 #include "shader.h"
 class Renderable {
  public:
+  void activate();
+  void deactivate();
   void render(std::unordered_map<std::string, std::shared_ptr<Texture>>);
   void test();
-  void attach(std::tuple<std::vector<float>, int, int> positions_location_size,
-              std::tuple<std::vector<float>, int, int> normals_location_size,
-              std::tuple<std::vector<float>, int, int> colours_location_size,
-              std::tuple<std::vector<float>, int, int>
-                  texture_coordinates_location_size,
+  const int create();
+  void attach(int id, std::vector<float> coordinates, int location, int size);
+  void attach(int id, std::vector<float> coordinates, int location, int size,
               std::string texture_name);
   void attach(std::shared_ptr<Shader> shader);
   template <typename T>

@@ -13,6 +13,7 @@ class Shader {
   Shader(const std::string vertexShader, const std::string fragmentShader);
   bool isInitialised();
   void activate();
+  void deactivate();
   void loadUniform(const std::string name, glm::mat4 mat);
   void loadUniform(const std::string name, int val);
   bool validate();

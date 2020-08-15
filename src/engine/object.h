@@ -24,6 +24,7 @@ class Object : public Renderable, public Movable {
 
  private:
   std::vector<std::shared_ptr<Object>> objects_;
+  std::vector<const int> ids_;
 };
 
 #endif

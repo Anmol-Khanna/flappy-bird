@@ -8,8 +8,8 @@ Fractal::Fractal(const int width, const int height)
                      {-1.0f, -1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f, -1.0f,
                       1.0f, -1.0f, -1.0f},
                      0, 2);
-  const std::string vertexCode = getShaderCode("src/fractal/fractal.vs");
-  const std::string fragmentCode = getShaderCode("src/fractal/fractal.fs");
+  const std::string vertexCode = getShaderCode("C:/Users/anony/Desktop/flappy/flappy-bird/src/fractal/fractal.vs"); //@TODO: make this relative
+  const std::string fragmentCode = getShaderCode("C:/Users/anony/Desktop/flappy/flappy-bird/src/fractal/fractal.fs"); //@TODO: make this relative
   Renderable::attach(
       std::make_shared<Shader>(Shader(vertexCode, fragmentCode)));
 }

@@ -39,15 +39,15 @@ int main() {
       });
 
   // PLAYER
-  std::string vertexCode = getShaderCode("src/player/helicopter.vs");
-  std::string fragmentCode = getShaderCode("src/player/helicopter.fs");
+  std::string vertexCode = getShaderCode("C:/Users/anony/Desktop/flappy/flappy-bird/src/player/helicopter.vs"); //@TODO: fix these to relative
+  std::string fragmentCode = getShaderCode("C:/Users/anony/Desktop/flappy/flappy-bird/src/player/helicopter.fs"); //@TODO: fix these to relative
   float bmin[3], bmax[3];
   std::unordered_map<std::string, std::shared_ptr<Texture>> textures{};
   std::vector<std::vector<float>> positions{}, normals{}, colours{},
       texture_coordinates{};
   std::vector<std::string> texture_names{};
   LoadObjAndConvert(
-      bmin, bmax, "assets/AW101/AW101.obj",
+      bmin, bmax, "C:/Users/anony/Desktop/flappy/flappy-bird/assets/AW101/AW101.obj", //@TODO: fix these to relative
       [&](std::vector<float> position) { positions.push_back(position); },
       [&](std::vector<float> normal) { normals.push_back(normal); },
       [&](std::vector<float> colour) { colours.push_back(colour); },

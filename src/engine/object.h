@@ -24,7 +24,8 @@ class Object : public Renderable, public Movable {
 
  private:
   std::vector<std::shared_ptr<Object>> objects_;
-  std::vector<const int> ids_;
+  //std::vector<const int> ids_; // This flags an error in xmemory about being forbidden by the C++ standard- consts in containers are not allowed
+  std::vector<int> ids_;
 };
 
 #endif

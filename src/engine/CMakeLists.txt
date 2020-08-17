@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.17)
 
 add_library(
     engine
+    AABB.cpp
     window.cpp
     movable.cpp
     mesh.cpp

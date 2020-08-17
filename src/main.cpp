@@ -15,6 +15,7 @@
 #include "utils.h"
 #include "object.h"
 #include "fractal.h"
+#include "AABB.h"
 
 int main() {
   constexpr int SCR_WIDTH = 800, SCR_HEIGHT = 800;
@@ -79,6 +80,10 @@ int main() {
       glm::mat4(1.0f),
       glm::vec3(1.0f / maxExtent, 1.0f / maxExtent, 1.0f / maxExtent)));
 
+  // AABB
+
+  AABB aabb{}; // call default constructor, 1x1x1 cube centered at origin
+
   // FRACTAL
   Fractal fractal{SCR_WIDTH, SCR_HEIGHT};
   float angle = 0.0f;
@@ -92,5 +97,7 @@ int main() {
                   glm::sin(angle) / maxExtent)));
     player.render(textures, camera.getTransform());
     fractal.render(camera.getTransform());
+    aabb.render();
+    aabb.update();
   });
 }

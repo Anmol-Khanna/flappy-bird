@@ -23,7 +23,7 @@ int main() {
       glm::perspective(glm::radians(45.0f),
                        (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f),
       (float)SCR_WIDTH / 2.0f, (float)SCR_HEIGHT / 2.0f};
-  Object player{};
+
   auto window{Window{SCR_WIDTH, SCR_HEIGHT, "Flappy Bird", 4, 1}};
   if (!window.isCreated()) {
     return -1;
@@ -40,6 +40,8 @@ int main() {
       });
 
   // PLAYER
+  Object player{};
+
   std::string vertexCode = getShaderCode("C:/Users/anony/Desktop/flappy/flappy-bird/src/player/helicopter.vs"); //@TODO: fix these to relative
   std::string fragmentCode = getShaderCode("C:/Users/anony/Desktop/flappy/flappy-bird/src/player/helicopter.fs"); //@TODO: fix these to relative
   float bmin[3], bmax[3];
@@ -81,23 +83,25 @@ int main() {
       glm::vec3(1.0f / maxExtent, 1.0f / maxExtent, 1.0f / maxExtent)));
 
   // AABB
-
-  AABB aabb{}; // call default constructor, 1x1x1 cube centered at origin
+  AABB aabb{}; // default constructor, unit cube at origin. Set up VAO, VBO, shader program
+  
 
   // FRACTAL
   Fractal fractal{SCR_WIDTH, SCR_HEIGHT};
   float angle = 0.0f;
   window.loop([&]() {
+    //glClearColor(1.0f,1.0f,0.5f,1.0f);
     angle += 0.1f;
-    player.Movable::setRotation(
-        glm::rotate(glm::mat4(1.0f), glm::radians(angle), glm::vec3(0, 1, 0)));
-    player.Movable::setScale(glm::scale(
-        glm::mat4(1.0f),
-        glm::vec3(glm::sin(angle) / maxExtent, glm::sin(angle) / maxExtent,
-                  glm::sin(angle) / maxExtent)));
+    //player.Movable::setRotation(
+        //glm::rotate(glm::mat4(1.0f), glm::radians(angle), glm::vec3(0, 1, 0)));
+    //player.Movable::setScale(glm::scale(
+        //glm::mat4(1.0f),
+        //glm::vec3(glm::sin(angle) / maxExtent, glm::sin(angle) / maxExtent,
+                  //glm::sin(angle) / maxExtent)));
     player.render(textures, camera.getTransform());
     fractal.render(camera.getTransform());
     aabb.render();
-    aabb.update();
+    //aabb.render(camera.getTransform());
+    //aabb.update();
   });
 }

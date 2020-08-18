@@ -4,18 +4,51 @@
 AABB::AABB()
     : min_{glm::vec3(-0.5f, -0.5f, -0.5f)},
       max_{glm::vec3(+0.5f, +0.5f, +0.5f)},
-      vertices{// front face
-               max_[0], min_[1], min_[2], max_[0], min_[1], max_[2], max_[0],max_[1], max_[2], max_[0], max_[1], min_[2],
+      vertices{
+                // front face
+               max_[0], min_[1], min_[2], 
+               max_[0], min_[1], max_[2], 
+               max_[0], max_[1], max_[2], 
+               max_[0], min_[1], min_[2],
+               max_[0], max_[1], max_[2],
+               max_[0], max_[1], min_[2],
                // back face
-               min_[0], min_[1], min_[2], min_[0], min_[1], max_[2], min_[0],max_[1], max_[2], min_[0], max_[1], min_[2],
-               // left face
-               min_[0], min_[1], min_[2], max_[0], min_[1], min_[2], max_[0],max_[1], min_[2], min_[0], max_[1], min_[2],
+               min_[0], min_[1], min_[2], 
+               min_[0], min_[1], max_[2], 
+               min_[0], max_[1], max_[2], 
+               min_[0], min_[1], min_[2], 
+               min_[0], max_[1], max_[2],
+               min_[0], max_[1], min_[2],
+               // left face (actually is right face????)
+               min_[0], min_[1], min_[2], 
+               max_[0], min_[1], min_[2], 
+               max_[0], max_[1], min_[2], 
+               min_[0], min_[1], min_[2], 
+               max_[0], max_[1], min_[2],
+               min_[0], max_[1], min_[2],
                // right face
-               min_[0], min_[1], max_[2], max_[0], min_[1], max_[2], max_[0],max_[1], max_[2], min_[0], max_[1], max_[2],
+               min_[0], min_[1], max_[2], 
+               max_[0], min_[1], max_[2], 
+               max_[0], max_[1], max_[2], 
+               min_[0], min_[1], max_[2], 
+               max_[0], max_[1], max_[2],
+               min_[0], max_[1], max_[2],
                // top face
-               min_[0], max_[1], min_[2], max_[0], max_[1], min_[2], max_[0],max_[1], max_[2], min_[0], max_[1], max_[2],
+               min_[0], max_[1], min_[2],
+               max_[0], max_[1], min_[2], 
+               max_[0], max_[1], max_[2], 
+               min_[0], max_[1], min_[2], 
+               max_[0], max_[1], max_[2],
+               min_[0], max_[1], max_[2],
                // bottom face
-               min_[0], min_[1], min_[2], max_[0], min_[1], min_[2], max_[0],min_[1], max_[2], min_[0], min_[1], max_[2]} 
+               min_[0], min_[1], min_[2], 
+               max_[0], min_[1], min_[2], 
+               max_[0], min_[1], max_[2], 
+               min_[0], min_[1], min_[2], 
+               max_[0], min_[1], max_[2],
+               min_[0], min_[1], max_[2]
+} 
+
 {
   // create and bind VAO, VBO, pull in shaders, glDrawArrays()
   const char* AABBVertexShaderSource =
@@ -32,7 +65,7 @@ AABB::AABB()
       "out vec4 FragColor;\n"
       "void main()\n"
       "{\n"
-      "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+      "   FragColor = vec4(1.0f, 0.2f, 0.2f, 0.1f);\n"
       "}\n\0";
 
   unsigned int VBO;
@@ -45,7 +78,7 @@ AABB::AABB()
   glBindBuffer(GL_ARRAY_BUFFER, VBO);
   glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0); // let OpenGL figure the stride out itself- the array is tightly packed
   glEnableVertexAttribArray(0);
 
   glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -98,7 +131,7 @@ void AABB::render(glm::mat4 transform) {
     glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(transform));
   }
   glBindVertexArray(VAO);
-  glDrawArrays(GL_TRIANGLES, 0, 24);
+  glDrawArrays(GL_TRIANGLES, 0, 36); // 6 is correct, for just one face- there are 6 verts needed to process 2 tris
   glEnableVertexAttribArray(0);  
   /*
   auto const id = Renderable::create();

@@ -13,7 +13,7 @@ class AABB : Movable, Renderable {
  private:
   glm::vec3 min_;
   glm::vec3 max_;
-  float vertices[72]; //72 floats => 24 vertices since each has 3 floats
+  float vertices[108]; //72 floats => 24 vertices since each has 3 floats| 108 because need to repeat verts if not using an EBO
   unsigned int AABBShaderProgram;
   unsigned int VAO;
 };

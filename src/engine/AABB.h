@@ -1,15 +1,14 @@
 #include <glm/glm.hpp>
 #include "movable.h"
 #include "renderable.h"
+#include <glm/gtc/type_ptr.hpp>
 
 class AABB : Movable, Renderable {
  public:
   AABB();
-  AABB(glm::vec3 position, glm::mat4 scale);
-  AABB(glm::vec3 min, glm::vec3 max);
-  void update();
-  //void render(glm::mat4 transform);
-  void render();
+  //AABB(glm::vec3 min, glm::vec3 max);
+  //void update();
+  void render(glm::mat4 transform);
 
  private:
   glm::vec3 min_;

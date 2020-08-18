@@ -100,7 +100,7 @@ int main() {
                   //glm::sin(angle) / maxExtent)));
     player.render(textures, camera.getTransform());
     fractal.render(camera.getTransform());
-    aabb.render();
+    aabb.render(camera.getTransform());
     //aabb.render(camera.getTransform());
     //aabb.update();
   });

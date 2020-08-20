@@ -83,7 +83,8 @@ int main() {
       glm::vec3(1.0f / maxExtent, 1.0f / maxExtent, 1.0f / maxExtent)));
 
   // AABB
-  AABB aabb{}; // default constructor, unit cube at origin. Set up VAO, VBO, shader program
+  //AABB aabb{}; // default constructor, unit cube at origin. Set up VAO, VBO, shader program
+  AABB aabb{glm::vec3(bmin[0],bmin[1],bmin[2]), glm::vec3(bmax[0],bmax[1],bmax[2])};  // AABB::AABB(glm::vec3 min, glm::vec3 max). Expected result is that the box correctly bounds the copter
   
 
   // FRACTAL
@@ -91,16 +92,15 @@ int main() {
   float angle = 0.0f;
   window.loop([&]() {
     //glClearColor(1.0f,1.0f,0.5f,1.0f);
-    angle += 0.1f;
-    //player.Movable::setRotation(
-        //glm::rotate(glm::mat4(1.0f), glm::radians(angle), glm::vec3(0, 1, 0)));
+    angle += 0.6f;
+    player.Movable::setRotation(glm::rotate(glm::mat4(1.0f), glm::radians(angle), glm::vec3(0, 1, 0)));
     //player.Movable::setScale(glm::scale(
         //glm::mat4(1.0f),
         //glm::vec3(glm::sin(angle) / maxExtent, glm::sin(angle) / maxExtent,
                   //glm::sin(angle) / maxExtent)));
     player.render(textures, camera.getTransform());
     fractal.render(camera.getTransform());
-    aabb.render(camera.getTransform());
+    aabb.render(camera.getTransform(), player.getTransform());
     //aabb.render(camera.getTransform());
     //aabb.update();
   });
